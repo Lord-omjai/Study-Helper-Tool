@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | StudyBrain</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #564FC9;
+            --secondary: #4D8AF0;
+            --accent: #FF6584;
+            --light: #F8F9FA;
+            --dark: #2D3748;
+            --gray: #718096;
+            --light-gray: #E2E8F0;
+            --success: #48BB78;
+            --warning: #ED8936;
+            --danger: #F56565;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --rounded-sm: 6px;
+            --rounded-md: 12px;
+            --rounded-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #F7FAFC;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        @supports (font-variation-settings: normal) {
+            body { font-family: 'Inter var', -apple-system, BlinkMacSystemFont, sans-serif; }
+        }
+
+        .auth-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .auth-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-left::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .auth-left::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .auth-left-content {
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .auth-left h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .auth-left p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .auth-features {
+            text-align: left;
+            margin-top: 40px;
+        }
+
+        .auth-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .auth-feature i {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 3px;
+        }
+
+        .auth-feature-text h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .auth-feature-text p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 0;
+        }
+
+        .auth-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background-color: white;
+        }
+
+        .auth-form-container {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: var(--rounded-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 12px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .auth-form-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-form-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .auth-form-title p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .auth-form {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--rounded-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 40px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 14px 24px;
+            border-radius: var(--rounded-sm);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px rgba(108, 99, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(108, 99, 255, 0.2);
+        }
+
+        .btn-google {
+            background-color: white;
+            color: var(--dark);
+            border: 1px solid var(--light-gray);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-google:hover {
+            background-color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .divider::before {
+            margin-right: 16px;
+        }
+
+        .divider::after {
+            margin-left: 16px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .auth-left h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .auth-left {
+                padding: 40px 20px;
+                display: none; /* Hide left panel on mobile */
+            }
+
+            .auth-right {
+                padding: 60px 20px;
+            }
+
+            .auth-logo {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .auth-form-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .remember-forgot {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-left">
+            <div class="auth-left-content">
+                <h1>Welcome Back to StudyBrain</h1>
+                <p>Continue your learning journey with personalized study tools powered by AI.</p>
+                
+                <div class="auth-features">
+                    <div class="auth-feature">
+                        <i class="fas fa-brain"></i>
+                        <div class="auth-feature-text">
+                            <h3>Smart Learning</h3>
+                            <p>AI-powered tools adapt to your learning style</p>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-feature">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="auth-feature-text">
+                            <h3>Track Progress</h3>
+                            <p>Visualize your improvement with detailed analytics</p>
+                        </div>
+                    </div>
+                    
+                    <div class="auth-feature">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div class="auth-feature-text">
+                            <h3>Study Anywhere</h3>
+                            <p>Access your materials on all devices</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-right">
+            <div class="auth-form-container">
+                <div class="auth-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="logo-text">StudyBrain</div>
+                </div>
+                
+                <div class="auth-form-title">
+                    <h2>Log in to your account</h2>
+                    <p>Welcome back! Please enter your details.</p>
+                </div>
+                
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                    
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                    
+                    <div class="divider">or</div>
+                    
+                    <button type="button" class="btn btn-google">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                    
+                    <div class="auth-footer">
+                        Don't have an account? <a href="signup.html">Sign up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', function() {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+        
+        // Form submission
+        const form = document.querySelector('.auth-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            console.log('Form submitted');
+            // In a real implementation, you would validate and send data to your backend
+        });
+    </script>
+</body>
+</html>
