@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered Study Helper that generates summaries, flashcards, and quizzes from your notes and textbook images to enhance learning efficiency.">
+    <meta name="keywords" content="AI study tool, learning companion, flashcard generator, quiz maker, note summarizer, student aid, education technology">
+    <title>Study Helper | AI Learning Companion for Students</title>
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Study Helper | AI Learning Companion">
+    <meta property="og:description" content="Transform your notes into summaries, flashcards, and quizzes with AI assistance.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://studyhelper.example.com">
+    <meta property="og:image" content="https://studyhelper.example.com/images/study-helper-preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --warning-color: #f0ad4e;
+            --danger-color: #d9534f;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fb;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+        
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .main-content {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .study-tool {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .tool-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tab-btn {
+            padding: 8px 16px;
+            background-color: #eee;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .input-area {
+            margin-bottom: 20px;
+        }
+        
+        .input-methods {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .input-method-btn {
+            padding: 8px 16px;
+            background-color: #eee;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .input-method-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        .file-upload {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            border: 2px dashed #ddd;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+        
+        .file-upload.active {
+            display: flex;
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .file-upload p {
+            margin-bottom: 15px;
+        }
+        
+        .file-input-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .file-input-label:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .process-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+        
+        .process-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .output-area {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .output-area.active {
+            display: block;
+        }
+        
+        .output-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .output-tab-btn {
+            padding: 8px 16px;
+            background-color: #eee;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .output-tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .output-content {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            min-height: 200px;
+        }
+        
+        .flashcard {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .flashcard:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flashcard .question {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .flashcard .answer {
+            display: none;
+            color: #555;
+        }
+        
+        .flashcard.active .answer {
+            display: block;
+        }
+        
+        .quiz-question {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-question h4 {
+            margin-bottom: 15px;
+        }
+        
+        .quiz-option {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .quiz-option:hover {
+            background-color: #eee;
+        }
+        
+        .quiz-option.selected {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .ad-container {
+            background-color: #f5f5f5;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            margin: 30px 0;
+            border: 1px dashed #ccc;
+        }
+        
+        .ad-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-column a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .tab-buttons, .output-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-brain"></i>
+                <span>Study Helper</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#tool">Study Tool</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Your AI-Powered Learning Companion</h1>
+            <p>Transform your study materials into summaries, flashcards, and quizzes with our intelligent study helper. Save time and learn more effectively.</p>
+            
+            <div class="cta-buttons">
+                <a href="#tool" class="btn btn-primary">Try It Now</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Ad Container (Top) -->
+    <div class="container">
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+            <!-- Replace with your Google AdSense code -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                crossorigin="anonymous"></script>
+            <!-- StudyHelper_Top_Banner -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                data-ad-slot="YOUR_AD_SLOT_ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+    
+    <!-- Features Section -->
+    <section class="main-content" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>Discover how our AI-powered tools can enhance your learning experience</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Smart Summaries</h3>
+                    <p>Get concise summaries of lengthy texts, highlighting key concepts and main ideas for efficient review.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Flashcard Generator</h3>
+                    <p>Automatically create flashcards from your notes with questions on one side and answers on the other.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>Quiz Maker</h3>
+                    <p>Generate practice quizzes with multiple-choice questions to test your knowledge and track progress.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Text Extraction</h3>
+                    <p>Upload images of textbook pages and extract text for processing with our OCR technology.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Subject Specialization</h3>
+                    <p>Optimized for various academic subjects including science, history, literature, and more.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Access your study materials anytime, anywhere with our fully responsive design.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Ad Container (Middle) -->
+    <div class="container">
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+            <!-- Replace with your Google AdSense code -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                crossorigin="anonymous"></script>
+            <!-- StudyHelper_Mid_Banner -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                data-ad-slot="YOUR_AD_SLOT_ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+    
+    <!-- Study Tool Section -->
+    <section class="main-content" id="tool">
+        <div class="container">
+            <div class="section-title">
+                <h2>AI Study Tool</h2>
+                <p>Upload your notes or textbook images and let our AI create study materials for you</p>
+            </div>
+            
+            <div class="study-tool">
+                <div class="tool-header">
+                    <h3>Create Study Materials</h3>
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="notes">Notes</button>
+                        <button class="tab-btn" data-tab="textbook">Textbook</button>
+                        <button class="tab-btn" data-tab="url">Web URL</button>
+                    </div>
+                </div>
+                
+                <div class="input-area">
+                    <div class="input-methods">
+                        <button class="input-method-btn active" data-method="text">Type Text</button>
+                        <button class="input-method-btn" data-method="upload">Upload File</button>
+                    </div>
+                    
+                    <textarea id="studyText" placeholder="Paste your notes here or type them directly..."></textarea>
+                    
+                    <div class="file-upload" id="fileUpload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Upload your notes file or textbook image</p>
+                        <label for="fileInput" class="file-input-label">Choose File</label>
+                        <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" style="display: none;">
+                        <p id="fileName" style="margin-top: 10px; display: none;"></p>
+                    </div>
+                    
+                    <div class="options" style="margin-top: 15px;">
+                        <label for="subjectSelect" style="margin-right: 10px;">Subject:</label>
+                        <select id="subjectSelect" style="padding: 8px; border-radius: var(--border-radius); border: 1px solid #ddd;">
+                            <option value="general">General</option>
+                            <option value="science">Science</option>
+                            <option value="history">History</option>
+                            <option value="literature">Literature</option>
+                            <option value="math">Mathematics</option>
+                            <option value="language">Language Learning</option>
+                        </select>
+                    </div>
+                    
+                    <button class="process-btn" id="processBtn">Generate Study Materials</button>
+                </div>
+                
+                <div class="output-area" id="outputArea">
+                    <div class="output-tabs">
+                        <button class="output-tab-btn active" data-output="summary">Summary</button>
+                        <button class="output-tab-btn" data-output="flashcards">Flashcards</button>
+                        <button class="output-tab-btn" data-output="quiz">Quiz</button>
+                    </div>
+                    
+                    <div class="output-content">
+                        <div class="output-tab-content active" id="summaryOutput">
+                            <p>Your AI-generated summary will appear here. Paste your notes above and click "Generate Study Materials" to get started.</p>
+                        </div>
+                        
+                        <div class="output-tab-content" id="flashcardsOutput">
+                            <div class="flashcard">
+                                <div class="question">What is the capital of France?</div>
+                                <div class="answer">Paris</div>
+                            </div>
+                            <div class="flashcard">
+                                <div class="question">What is the chemical symbol for water?</div>
+                                <div class="answer">H₂O</div>
+                            </div>
+                            <p style="text-align: center; margin-top: 20px;">Your generated flashcards will appear here.</p>
+                        </div>
+                        
+                        <div class="output-tab-content" id="quizOutput">
+                            <div class="quiz-question">
+                                <h4>What is the capital of France?</h4>
+                                <label class="quiz-option"><input type="radio" name="q1" style="display: none;"> London</label>
+                                <label class="quiz-option"><input type="radio" name="q1" style="display: none;"> Paris</label>
+                                <label class="quiz-option"><input type="radio" name="q1" style="display: none;"> Berlin</label>
+                                <label class="quiz-option"><input type="radio" name="q1" style="display: none;"> Madrid</label>
+                            </div>
+                            <p style="text-align: center; margin-top: 20px;">Your generated quiz questions will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Ad Container (Bottom) -->
+    <div class="container">
+        <div class="ad-container">
+            <span class="ad-label">Advertisement</span>
+            <!-- Replace with your Google AdSense code -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"
+                crossorigin="anonymous"></script>
+            <!-- StudyHelper_Bottom_Banner -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                data-ad-slot="YOUR_AD_SLOT_ID"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Study Helper</h3>
+                    <p>Your AI-powered learning companion that helps you study smarter, not harder.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#tool">Study Tool</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Study Tips</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column" id="contact">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@studyhelper.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education St, Learnville</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Study Helper. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+        
+        // Tab Switching for Study Tool
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                tabBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Here you would typically show/hide different input areas based on tab
+                // For this demo, we're just showing the same input area
+            });
+        });
+        
+        // Input Method Switching
+        const inputMethodBtns = document.querySelectorAll('.input-method-btn');
+        const studyText = document.getElementById('studyText');
+        const fileUpload = document.getElementById('fileUpload');
+        
+        inputMethodBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                inputMethodBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const method = this.getAttribute('data-method');
+                if (method === 'text') {
+                    studyText.style.display = 'block';
+                    fileUpload.style.display = 'none';
+                } else {
+                    studyText.style.display = 'none';
+                    fileUpload.style.display = 'flex';
+                }
+            });
+        });
+        
+        // File Upload Display
+        const fileInput = document.getElementById('fileInput');
+        const fileName = document.getElementById('fileName');
+        
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                fileName.textContent = this.files[0].name;
+                fileName.style.display = 'block';
+            } else {
+                fileName.style.display = 'none';
+            }
+        });
+        
+        // Process Button - Simulate AI Processing
+        const processBtn = document.getElementById('processBtn');
+        const outputArea = document.getElementById('outputArea');
+        
+        processBtn.addEventListener('click', function() {
+            // Show loading state
+            this.textContent = 'Processing...';
+            this.disabled = true;
+            
+            // Simulate API call/processing delay
+            setTimeout(() => {
+                // Show output area
+                outputArea.style.display = 'block';
+                
+                // Reset button
+                this.textContent = 'Generate Study Materials';
+                this.disabled = false;
+                
+                // Scroll to output
+                outputArea.scrollIntoView({ behavior: 'smooth' });
+                
+                // In a real implementation, you would:
+                // 1. Get the input text or process the uploaded file
+                // 2. Send to your backend/AI service
+                // 3. Receive and display the generated content
+                
+                // For demo purposes, we'll just show some sample content
+                document.getElementById('summaryOutput').innerHTML = `
+                    <h4>Generated Summary</h4>
+                    <p>This is a simulated AI-generated summary of your input text. In a real implementation, this would contain the actual summary generated from your notes.</p>
+                    <p>The summary would highlight key concepts, main ideas, and important details from your study materials, making it easier to review and retain information.</p>
+                `;
+                
+                document.getElementById('flashcardsOutput').innerHTML = `
+                    <div class="flashcard active">
+                        <div class="question">What is the main purpose of this study tool?</div>
+                        <div class="answer">To help students create effective study materials like summaries, flashcards, and quizzes from their notes using AI technology.</div>
+                    </div>
+                    <div class="flashcard">
+                        <div class="question">How does the flashcard feature work?</div>
+                        <div class="answer">The AI identifies key concepts in your notes and generates question-answer pairs that you can use for active recall practice.</div>
+                    </div>
+                    <div class="flashcard">
+                        <div class="question">Can you upload images of textbook pages?</div>
+                        <div class="answer">Yes, the tool can extract text from images using OCR technology and then process that text to create study materials.</div>
+                    </div>
+                `;
+                
+                document.getElementById('quizOutput').innerHTML = `
+                    <div class="quiz-question">
+                        <h4>What is the primary benefit of using this study tool?</h4>
+                        <label class="quiz-option"><input type="radio" name="q1" style="display: none;"> It makes studying more time-consuming</label>
+                        <label class="quiz-option selected"><input type="radio" name="q1" style="display: none;"> It helps create effective study materials quickly</label>
+                        <label class="quiz-option"><input type="radio" name="q1" style="display: none;"> It replaces the need to study altogether</label>
+                        <label class="quiz-option"><input type="radio" name="q1" style="display: none;"> It only works for science subjects</label>
+                    </div>
+                    <div class="quiz-question">
+                        <h4>Which of these file types can you upload?</h4>
+                        <label class="quiz-option"><input type="radio" name="q2" style="display: none;"> MP3 audio files</label>
+                        <label class="quiz-option"><input type="radio" name="q2" style="display: none;"> ZIP archives</label>
+                        <label class="quiz-option selected"><input type="radio" name="q2" style="display: none;"> PDF documents</label>
+                        <label class="quiz-option"><input type="radio" name="q2" style="display: none;"> EXE executables</label>
+                    </div>
+                `;
+            }, 1500);
+        });
+        
+        // Output Tab Switching
+        const outputTabBtns = document.querySelectorAll('.output-tab-btn');
+        const outputTabContents = document.querySelectorAll('.output-tab-content');
+        
+        outputTabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons and contents
+                outputTabBtns.forEach(b => b.classList.remove('active'));
+                outputTabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const outputType = this.getAttribute('data-output');
+                document.getElementById(outputType + 'Output').classList.add('active');
+            });
+        });
+        
+        // Flashcard Toggle
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.flashcard')) {
+                const flashcard = e.target.closest('.flashcard');
+                flashcard.classList.toggle('active');
+            }
+            
+            // Quiz Option Selection
+            if (e.target.closest('.quiz-option')) {
+                const quizOption = e.target.closest('.quiz-option');
+                const questionDiv = quizOption.parentElement;
+                
+                // Remove selected class from all options in this question
+                questionDiv.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                quizOption.classList.add('selected');
+            }
+        });
+    </script>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Study Helper - AI Learning Companion",
+        "description": "AI-powered tool that generates summaries, flashcards, and quizzes from study materials to enhance learning efficiency.",
+        "url": "https://studyhelper.example.com",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "Study Helper"
+        }
+    }
+    </script>
+</body>
+</html>
